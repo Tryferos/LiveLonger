@@ -1,0 +1,11 @@
+
+node_modules/*
+package-lock.json
+.env
+
+README.md
+
+dist/
+.DS_Store
+
+public/
