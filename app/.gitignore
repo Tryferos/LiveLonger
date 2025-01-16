@@ -33,10 +33,8 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
-
-src/screens
-
-
+README.md
+yarn.lock
 # node.js
 #
 node_modules/
