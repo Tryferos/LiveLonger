@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "[ -d dist ] && rm -r dist; mkdir dist && yarn install && npx tsc",
+    "build": "[ -d dist ] && rm -r dist; mkdir dist && npm install typescript && npx tsc",
     "start": "node dist/src/index.js",
     "watch": "npx nodemon src/index.ts"
   },
