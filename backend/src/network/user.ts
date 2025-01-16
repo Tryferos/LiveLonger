@@ -1,10 +1,6 @@
-import Network from "."
-import { Schemas } from "../constants/Schemas";
 import { ProgramValues, _DOC_LIMIT } from "../constants/Types";
 import { Presets, PresetsModel } from "../database/schema/presets"
-import { Product, ProductDB, ProductDBModel, ProductModel } from "../database/schema/product";
 import { Program, ProgramFull, ProgramModel, ProgramType } from "../database/schema/program";
-import { formatProductWithGrams } from "../libs/product";
 import { calculateCalories } from "../libs/user";
 
 export const getPresets = async ({ uid }: { uid: string }): Promise<Presets | null> => {
@@ -53,7 +49,7 @@ export const setPresets = async ({ uid, presets: data }: { uid: string, presets:
             sex: presets.sex,
             uid: presets.uid,
             weight: presets.weight,
-        }
+        } as Presets;
     } else {
         return null;
     }
