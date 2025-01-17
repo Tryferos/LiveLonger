@@ -30,8 +30,7 @@ app.use(Routes_1.ROUTES.PATH_INDEX, routes_1.router);
  *  Serve the frontend
 */
 app.get('/', (req, res) => {
-    console.log(MAIN_PATH);
-    res.sendFile('/public/frontend/index.html');
+    res.sendFile(path_1.default.join(exports.MAIN_PATH, '../', 'public/frontend/index.html'));
 });
 app.listen(port, async () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

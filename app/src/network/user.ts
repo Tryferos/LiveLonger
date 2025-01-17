@@ -1,11 +1,11 @@
 import Network from '.';
 import {API_ROUTES} from '../constants/network';
 import {
-  Programs,
-  ProgramFull,
-  UserPresets,
-  ProgramType,
   Program,
+  ProgramFull,
+  ProgramType,
+  Programs,
+  UserPresets,
 } from '../types/settings';
 
 export const getNutritionPresets = async () => {
