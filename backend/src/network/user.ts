@@ -32,13 +32,13 @@ export const getProgramByDate = async ({ uid, date: dateMs }: { uid: string; dat
 }
 
 export const setPresets = async ({ uid, presets: data }: { uid: string, presets: Presets }): Promise<Presets | null> => {
-    let presets = await PresetsModel.findOneAndUpdate({ uid: uid }, data, {
+    let presets: Presets | null = await PresetsModel.findOneAndUpdate({ uid: uid }, data, {
         new: true,
         upsert: true,
-    }).exec();
+    }).exec() as Presets | null;
     if (!presets) {
         const doc = await PresetsModel.create(data);
-        presets = doc.toObject();
+        presets = doc.toObject() as Presets | null;
     }
     if (presets) {
         return {
@@ -49,7 +49,8 @@ export const setPresets = async ({ uid, presets: data }: { uid: string, presets:
             sex: presets.sex,
             uid: presets.uid,
             weight: presets.weight,
-        } as Presets;
+            _id: presets._id,
+        }
     } else {
         return null;
     }
