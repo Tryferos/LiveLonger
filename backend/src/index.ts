@@ -33,7 +33,7 @@ app.use(ROUTES.PATH_INDEX, globalRouter);
  *  Serve the frontend
 */
 app.get('/', (req, res) => {
-    res.sendFile('./public/frontend/index.html');
+    res.sendFile(path.join(MAIN_PATH, '../', 'public/frontend/index.html'));
 })
 
 app.listen(port, async() => {
