@@ -15,7 +15,7 @@ type MealProductInfoCardProps = {
   name: string;
   quantity: number;
   calories: number;
-  nutrients: Nutrients;
+  nutrients: Nutrients | null;
 };
 export const MealProductInfoCard: FC<MealProductInfoCardProps> = ({
   calories,
@@ -49,30 +49,32 @@ export const MealProductInfoCard: FC<MealProductInfoCardProps> = ({
           font="wotfardRegular">
           {`${name.length > 20 ? `${quantity}g ` : ''}${calories} kcal`}
         </CustomText>
-        <Row gap="3xs" className="items-center">
-          {[
-            ['Carbs', 'carbohydrates'],
-            ['Protein', 'protein'],
-            ['Fat', 'fat'],
-          ].map(([title, field], i) => {
-            const grams = nutrients[field as keyof Nutrients];
-            return (
-              <Fragment key={i}>
-                <Row gap="4xs" className="items-end">
-                  <CustomText size="sm" color="gray200">
-                    {title}:
-                  </CustomText>
-                  <CustomText size="sm" color="white">
-                    {grams.toFixed(grams >= 10 ? 0 : 1)}g
-                  </CustomText>
-                </Row>
-                {i < 2 && (
-                  <CustomIcon color="gray200" icon="circle" size={'4xs'} />
-                )}
-              </Fragment>
-            );
-          })}
-        </Row>
+        {nutrients && (
+          <Row gap="3xs" className="items-center">
+            {[
+              ['Carbs', 'carbohydrates'],
+              ['Protein', 'protein'],
+              ['Fat', 'fat'],
+            ].map(([title, field], i) => {
+              const grams = nutrients[field as keyof Nutrients];
+              return (
+                <Fragment key={i}>
+                  <Row gap="4xs" className="items-end">
+                    <CustomText size="sm" color="gray200">
+                      {title}:
+                    </CustomText>
+                    <CustomText size="sm" color="white">
+                      {grams.toFixed(grams >= 10 ? 0 : 1)}g
+                    </CustomText>
+                  </Row>
+                  {i < 2 && (
+                    <CustomIcon color="gray200" icon="circle" size={'4xs'} />
+                  )}
+                </Fragment>
+              );
+            })}
+          </Row>
+        )}
       </Column>
     </Row>
   );
