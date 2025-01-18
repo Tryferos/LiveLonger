@@ -62,16 +62,17 @@ export type DailyMealsType = {
 
 export const isDailyMealItem = (
   item: DailyMealType | DailyQuickMealType,
-): item is DailyMealType => (item as DailyMealType).products.length > 0;
+): item is DailyMealType => (item as DailyMealType)?.products?.length > 0;
 
 export const isDailyQuickMealItem = (
   item: DailyMealType | DailyQuickMealType,
-): item is DailyQuickMealType => !!(item as DailyQuickMealType).quickMeal;
+): item is DailyQuickMealType =>
+  (item as DailyQuickMealType)?.quickMeals?.length > 0;
 
 export type DailyQuickMealType = {
   calories: number;
   quantity: number;
-  quickMeal: QuickMeal;
+  quickMeals: QuickMealInfo[];
   nutrients_grams: Nutrients;
 } & Pick<Meal, 'type' | '_id'>;
 

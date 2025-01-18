@@ -1,9 +1,8 @@
 import {create} from 'zustand';
-import {MealType} from '../types/nutrition';
 import {getNutritionPresets, setNutritionPresets} from '../network/user';
+import {MealType} from '../types/nutrition';
 import {UserPresets} from '../types/settings';
 import {useAlerts} from './alerts';
-import {wait} from '../libs/utils';
 
 type NutritionPresetsState = {
   presets: UserPresets | null;
@@ -90,6 +89,10 @@ export const getPreset = (type: MealType) => {
     case 'SNACK':
       return {
         factor: MealFactors.snack_calories_factor,
+      };
+    default:
+      return {
+        factor: MealFactors.breakfast_calories_factor,
       };
   }
 };
