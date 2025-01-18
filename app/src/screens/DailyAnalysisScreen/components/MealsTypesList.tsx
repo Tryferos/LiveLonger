@@ -4,7 +4,11 @@ import {Column} from '../../../components/elements/Column';
 import {CustomText} from '../../../components/elements/CustomText';
 import {AppSpace} from '../../../constants/values';
 import {EmptyIcon} from '../../../svgs/empty';
-import {DailyMealsType, isDailyQuickMealItem} from '../../../types/nutrition';
+import {
+  DailyMealsType,
+  isDailyMealItem,
+  isDailyQuickMealItem,
+} from '../../../types/nutrition';
 import {MealsTypeList} from './MealsTypeList';
 
 type MealsListProps = {
@@ -14,7 +18,9 @@ type MealsListProps = {
 export const MealsTypesList: FC<MealsListProps> = ({meals}) => {
   const isEmpty = useMemo(() => {
     return Object.values(meals).every(meal =>
-      isDailyQuickMealItem(meal) ? !meal.quickMeal : meal.products.length === 0,
+      isDailyQuickMealItem(meal)
+        ? meal && meal.quickMeals && meal.quickMeals.length === 0
+        : meal && meal.products && meal.products.length === 0,
     );
   }, [meals]);
   if (isEmpty) {
@@ -33,11 +39,16 @@ export const MealsTypesList: FC<MealsListProps> = ({meals}) => {
         gap="xl"
         style={{width: Dimensions.get('screen').width - AppSpace.xl}}>
         {Object.values(meals).map((item, index) => {
-          if (item.products.length === 0 && !item.quickMeal) {
-            return null;
+          if (isDailyMealItem(item)) {
+            if (!(item.products.length > 0)) {
+              return null;
+            }
           } else {
-            return <MealsTypeList key={item.type + index} {...item} />;
+            if (!(item.quickMeals.length > 0)) {
+              return null;
+            }
           }
+          return <MealsTypeList key={item.type + index} {...item} />;
         })}
       </Column>
     );
