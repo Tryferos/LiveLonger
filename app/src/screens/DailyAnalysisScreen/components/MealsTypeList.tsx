@@ -33,7 +33,6 @@ export const MealsTypeList: FC<DailyMealType | DailyQuickMealType> = props => {
   };
 
   const navigateToQuickMeal = (quickMeal: QuickMeal) => {
-    console.log(quickMeal);
     navigation.navigate('Quick_Meal_Details_Screen', {
       ...quickMeal,
       quickMealId: quickMeal._id ?? '',
@@ -66,19 +65,25 @@ export const MealsTypeList: FC<DailyMealType | DailyQuickMealType> = props => {
               mealType={type as MealType}
             />
           ))}
-        {isDailyQuickMealItem(props) && (
-          <MealProduct
-            onPress={() => navigateToQuickMeal(props.quickMeal)}
-            canBeSelected={false}
-            calories={props.calories}
-            name={props.quickMeal.name}
-            nutrients={props.nutrients_grams}
-            imageUrl={props.quickMeal.imageUrl}
-            quantity={props.quantity}
-            type="INDIVIDUAL_QUERIED"
-            mealType={type}
-          />
-        )}
+        {isDailyQuickMealItem(props) &&
+          props.quickMeals.map((quickMeal, index) => {
+            return (
+              <MealProduct
+                key={`${quickMeal.date} - ${index}`}
+                onPress={() => navigateToQuickMeal(quickMeal)}
+                canBeSelected={false}
+                calories={quickMeal.totalCalories}
+                name={quickMeal.name}
+                nutrients={
+                  quickMeal.totalNutrientsGrams ?? props.nutrients_grams
+                }
+                imageUrl={quickMeal.imageUrl}
+                quantity={quickMeal.totalGrams}
+                type="INDIVIDUAL_QUERIED"
+                mealType={type}
+              />
+            );
+          })}
       </Column>
     </Column>
   );

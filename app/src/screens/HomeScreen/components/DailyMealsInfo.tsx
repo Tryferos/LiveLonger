@@ -42,7 +42,7 @@ export const DailyMealsInfo: FC<TodayCardProps> = ({dailyMeals}) => {
         isDailyMealItem(item)
           ? item.products.length > 0
           : isDailyQuickMealItem(item)
-          ? item.quickMeal
+          ? item.quickMeals
           : false,
       );
     }
@@ -107,10 +107,14 @@ export const DailyMealsInfo: FC<TodayCardProps> = ({dailyMeals}) => {
             showsHorizontalScrollIndicator={false}
             horizontal
             className="">
-            {selectedMealValue.map(meal => {
+            {selectedMealValue.map((meal, index) => {
               return (
                 <Fragment
-                  key={isDailyQuickMealItem(meal) ? meal._id : meal.type}>
+                  key={
+                    isDailyQuickMealItem(meal)
+                      ? `${meal._id} - ${index}`
+                      : meal.type
+                  }>
                   {isDailyMealItem(meal) &&
                     meal.products.map((product, index) => {
                       return (
@@ -126,18 +130,22 @@ export const DailyMealsInfo: FC<TodayCardProps> = ({dailyMeals}) => {
                         />
                       );
                     })}
-                  {isDailyQuickMealItem(meal) ? (
-                    <MealProductInfoCard
-                      imageUrl={meal.quickMeal.imageUrl}
-                      key={meal._id}
-                      onPress={onPress}
-                      type={meal.type}
-                      name={meal.quickMeal.name}
-                      quantity={meal.quantity}
-                      calories={meal.calories}
-                      nutrients={meal.nutrients_grams}
-                    />
-                  ) : null}
+                  {isDailyQuickMealItem(meal)
+                    ? meal.quickMeals.map((quickMeal, index) => {
+                        return (
+                          <MealProductInfoCard
+                            key={`${index} - ${quickMeal._id} - ${quickMeal.date}`}
+                            imageUrl={quickMeal.imageUrl}
+                            onPress={onPress}
+                            type={meal.type}
+                            name={quickMeal.name}
+                            quantity={quickMeal.totalGrams}
+                            calories={quickMeal.totalCalories}
+                            nutrients={quickMeal.totalNutrientsGrams}
+                          />
+                        );
+                      })
+                    : null}
                 </Fragment>
               );
               // if (isDailyMealItem(meal)) {
