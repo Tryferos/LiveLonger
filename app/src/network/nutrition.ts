@@ -19,13 +19,22 @@ export const saveNutrition = async (
   return response;
 };
 
-export const saveQuickMealNutrition = async (
-  quickMealId: string,
-  type?: MealType,
-) => {
+export const saveQuickMealNutrition = async ({
+  quickMealId,
+  quantity_factor,
+  type,
+}: {
+  quickMealId: string;
+  quantity_factor: number;
+  type?: MealType;
+}) => {
   const response = await Network.post<Meal>({
     url: API_ROUTES.FOODS.FOODS_SAVE_QUICK_MEAL,
-    body: {quickMealId: quickMealId, type: type},
+    body: {
+      quickMealId: quickMealId,
+      type: type,
+      quantity_factor: quantity_factor,
+    },
   });
   return response;
 };
