@@ -43,9 +43,12 @@ export const getDateStringAgo = (_date: Date) => {
     return 'Last month';
   }
   if (ago <= singleDayMs * 365) {
-    return 'This year';
+    if (date.getFullYear() < new Date().getFullYear()) {
+      return 'Last year';
+    } else {
+      return 'This year';
+    }
   }
-  return 'Last year';
 };
 
 export const getDatePickerDate = (_date: Date) => {
