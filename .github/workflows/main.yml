@@ -37,7 +37,7 @@ jobs:
       - name: Build APK
         run: npm run build-android --prefix app
       - name: Upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Releases
           path: app/android/app/build/outputs/bundle/app-release.aab
