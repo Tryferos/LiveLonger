@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/wotfard-medium-webfont.ttf",
+      "sha1": "87b2c5dddae5d85a9f3ed513e515925e77963bcf"
+    },
+    {
+      "path": "assets/fonts/wotfard-regular-webfont.ttf",
+      "sha1": "ef71c679da8c7b460899da7b8c753908ea2f6b9a"
+    },
+    {
+      "path": "assets/fonts/wotfard-semibold-webfont.ttf",
+      "sha1": "fcc7b3a1098e6d9f8b0c77f64fd8893bb2a3891e"
+    }
+  ]
+}
