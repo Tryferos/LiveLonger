@@ -4,9 +4,13 @@ on:
   push: 
     branches:
       - main
+    paths:
+      - 'app/android/app/build.gradle'
   pull_request:
     branches:
       - main
+    paths:
+      - 'app/android/app/build.gradle'
 
 jobs:
   build:
