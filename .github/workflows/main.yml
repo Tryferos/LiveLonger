@@ -24,10 +24,15 @@ jobs:
         uses: actions/setup-node@v4
         with: 
           node-version: '22.9.0'
+      - name: Clean up old node_modules
+        run: |
+          rm -rf app/node_modules
+          rm -f app/package-lock.json
       - name: Install Dependencies
         run: |
           npm install --prefix app
-          npm install @react-native-community/cli-platform-android --prefix app
+      - name: Check if cli-platform-android exists
+        run: ls -la app/node_modules/@react-native-community/cli-platform-android/
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release-keystore.jks
       - name: Create key.properties
@@ -37,7 +42,7 @@ jobs:
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> app/android/key.properties
           echo "storeFile=release-keystore.jks" >> app/android/key.properties
       - name: Build APK
-        run: npm run build-android --prefix app
+        run: npm run build-android --prefix app -- --stacktrace
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
