@@ -7,7 +7,7 @@ export const INTERNAL_API_URL = async () => {
   if (await isEmulator()) {
     return 'http://10.0.2.2:3000/api';
   }
-  return 'https://live-longer-backend.vercel.app/api';
+  return 'https://livelonger.onrender.com/api';
 };
 
 export const API_ROUTES = {

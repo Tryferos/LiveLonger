@@ -79,16 +79,15 @@ yarn-error.log
 
 #template
 package-lock.json
-android/*
 ios/*
-android/
 ios/
 ios
-android
-android
 __tests__
-app.json
 .bundle
 google-services.json
+keystore.base64
+debug.keystore
 
 .env
+
+android/key.properties

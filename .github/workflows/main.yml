@@ -1,0 +1,45 @@
+name: "Build"
+
+on: 
+  push: 
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build App Bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+      - uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - name: Setup Nodejs
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '22'
+      - name: Install Dependencies
+        run: npm install --prefix app
+        name: Decode Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release-keystore.jks
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > app/android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> app/android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> app/android/key.properties
+          echo "storeFile=release-keystore.jks" >> app/android/key.properties
+      - name: Build APK
+        run: npm run build-android --prefix app
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: Releases
+          path: |
+            android/app/build/outputs/bundle/app-release.aab
+        
