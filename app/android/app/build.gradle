@@ -86,7 +86,7 @@ android {
         applicationId "com.tryferos.livelonger"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 23
+        versionCode 24
         versionName "1.0.11"
     }
     signingConfigs {
