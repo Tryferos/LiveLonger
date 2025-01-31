@@ -23,9 +23,11 @@ jobs:
       - name: Setup Nodejs
         uses: actions/setup-node@v4
         with: 
-          node-version: '22'
+          node-version: '22.9.0'
       - name: Install Dependencies
-        run: npm install --prefix app
+        run: |
+          npm install --prefix app
+          npm install @react-native-community/cli-platform-android --prefix app
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release-keystore.jks
       - name: Create key.properties
