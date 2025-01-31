@@ -15,40 +15,48 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Setup Java
         uses: actions/setup-java@v3.12.0
         with:
           distribution: 'zulu'
           java-version: '17'
+
       - name: Setup Nodejs
         uses: actions/setup-node@v4
         with: 
           node-version: '22.9.0'
+
       - name: Clean up old node_modules
         run: |
           rm -rf app/node_modules
           rm -f app/package-lock.json
+
       - name: Install Dependencies
         run: npm install --prefix app
-      - name: Install Dependencies for cli
-        run: npm install @react-native-community/cli-platform-android@latest --prefix app
+
       - name: Check if cli-platform-android exists
         run: ls -la app/node_modules/@react-native-community/cli-platform-android/
+
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/android/app/release-keystore.jks
+
       - name: Create key.properties
         run: |
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > app/android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> app/android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> app/android/key.properties
           echo "storeFile=release-keystore.jks" >> app/android/key.properties
+
       - name: Build APK
         run: npm run build-android --prefix app
+
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: Releases
           path: app/android/app/build/outputs/bundle/app-release.aab
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
