@@ -48,6 +48,9 @@ jobs:
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> app/android/key.properties
           echo "storeFile=release-keystore.jks" >> app/android/key.properties
 
+      - name: Decode google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > app/android/app/google-services.json
+
       - name: Build APK
         run: npm run build-android --prefix app
 
