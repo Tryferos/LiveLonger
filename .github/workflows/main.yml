@@ -40,6 +40,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Releases
-          path: |
-            android/app/build/outputs/bundle/app-release.aab
+          path: app/android/app/build/outputs/bundle/app-release.aab
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "app/android/app/build/outputs/bundle/app-release.aab"
+          tag: v${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
         
